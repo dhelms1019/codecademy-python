@@ -129,8 +129,69 @@ for transaction in daily_transactions_split:
   temp_list = []
   for element in transaction:
     temp_list.append(element.strip())
-#   print(temp_list)
+  # print(temp_list)
   transactions_clean.append(temp_list)
 
+# print(transactions_clean)
 
-print(transactions_clean)
+# separating lists of customers, sales, threads sold
+customers = []
+sales = []
+thread_sold = []
+
+for transaction in transactions_clean:
+    customers.append(transaction[0])
+    sales.append(transaction[1])
+    thread_sold.append(transaction[2])
+
+print("\n\nCustomer List:")
+print(customers)
+print("\nSALES:")
+print(sales)
+print("\nThread Sold:")
+print(thread_sold)
+
+# determining total sales
+total_sales = 0
+for sale in sales:
+  total_sales += float(sale.replace("$", ""))
+
+total_sales = round(total_sales, 2)
+print("\nTOTAL SALES:")
+print(total_sales)
+
+# every thread sold
+thread_sold_split = []
+for element in thread_sold:
+  if "&" in element:
+    temp_list = element.split("&")
+    for thread in temp_list:
+      thread_sold_split.append(thread)
+  else:
+    thread_sold_split.append(element)
+
+# print(thread_sold_split)
+
+# function for counting thread color
+def color_count(color):
+  counter = 0
+  for thread in thread_sold_split:
+    if thread == color:
+      counter += 1
+    else:
+      continue
+  return counter
+
+# print(color_count('white'))
+
+# reporting sales by thread color
+colors = ['red', 'yellow', 'green', 'white', 'black', 'blue', 'purple']
+
+print("\nTODAY'S SALES BY THREAD COLOR:")
+
+for color in colors:
+  print("The Thread Shed sold {} spools of {} thread today.".format(color_count(color), color))
+      
+
+
+
